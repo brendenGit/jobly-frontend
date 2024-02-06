@@ -1,6 +1,6 @@
-import * as React from 'react';
-import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+import PropTypes from 'prop-types';
+
 
 export default function BasicButton({ text }) {
     return (
@@ -12,3 +12,7 @@ export default function BasicButton({ text }) {
         </Button>
     );
 }
+
+BasicButton.propTypes = {
+    text: PropTypes.string.isRequired
+};

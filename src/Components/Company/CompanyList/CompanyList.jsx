@@ -1,32 +1,37 @@
-import React, { useState, useEffect } from "react";
 import Box from '@mui/material/Box';
+import LinearProgress from '@mui/material/LinearProgress';
 import CompanyCard from "../CompanyCard/CompanyCard";
-import { TextField } from "@mui/material";
 import JoblyApi from "../../../utils/api.cjs";
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
+import { useState, useEffect } from "react";
+import { TextField } from "@mui/material";
 
 
 function CompanyList() {
     const [companies, setCompanies] = useState([]);
     const [buttonText, setButtonText] = useState("Search");
-
-    const joblyApi = new JoblyApi();
-
-    async function fetchCompanies(search) {
-        try {
-            const data = await joblyApi.getAllCompanies(search);
-            setCompanies(data);
-        } catch (error) {
-            console.error("Error fetching companies:", error);
-        }
-    };
+    const [searchQuery, setSearchQuery] = useState("");
+    const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
-        fetchCompanies();
-    }, []);
+        async function fetchCompanies(searchQuery) {
+            try {
+                const joblyApi = new JoblyApi();
+                setIsLoading(true)
+                const data = await joblyApi.getAllCompanies(searchQuery);
+                setIsLoading(false)
+                setCompanies(data)
+            } catch (error) {
+                setIsLoading(false)
+                console.error("Error fetching companies:", error);
+            }
+        }
+        fetchCompanies(searchQuery);
+    }, [searchQuery]);
+
 
     async function handleSubmit(event) {
         event.preventDefault();
@@ -35,12 +40,12 @@ function CompanyList() {
         const data = new FormData(event.currentTarget);
 
         try {
-            await fetchCompanies(data.get('search'));
+            setSearchQuery(data.get('search'));
             setButtonText("Search");
         } catch (error) {
-            setErrorMessage(error.message);
+            console.log(error.message);
         }
-    };
+    }
 
     return (
         <Box
@@ -73,22 +78,28 @@ function CompanyList() {
                     {buttonText}
                 </Button>
             </Box>
-            {companies.length === 0 ?
-                <Card variant="outlined" sx={{
-                    width: "65%",
-                    mb: 2,
-                }}
-                >
-                    <CardContent>
-                        <Typography variant="h6" component="div">
-                            Sorry, no companies found!
-                        </Typography>
-                    </CardContent>
-                </Card>
+            {isLoading ?
+                <Box sx={{ width: '100%' }}>
+                    <LinearProgress />
+                </Box>
                 :
-                companies.map(company => (
-                    <CompanyCard company={company} key={company.handle} />
-                ))
+                (companies.length === 0 ?
+                    <Card variant="outlined" sx={{
+                        width: "65%",
+                        mb: 2,
+                    }}
+                    >
+                        <CardContent>
+                            <Typography variant="h6" component="div">
+                                Sorry, no companies found!
+                            </Typography>
+                        </CardContent>
+                    </Card>
+                    :
+                    companies.map(company => (
+                        <CompanyCard company={company} key={company.handle} />
+                    ))
+                )
             }
         </Box>
     );

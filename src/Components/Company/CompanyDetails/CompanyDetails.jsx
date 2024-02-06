@@ -1,21 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import JobCard from '../../Job/JobCard/JobCard';
 import JoblyApi from '../../../utils/api.cjs';
 import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 
 function CompanyDetails() {
     const { handle } = useParams();
     const [companyData, setCompanyData] = useState(null);
     const user = useSelector((state) => state.user.user);
-    const joblyApi = new JoblyApi();
+
 
     useEffect(() => {
         const fetchCompanyData = async () => {
             try {
+                const joblyApi = new JoblyApi();
                 const data = await joblyApi.getCompany(handle);
                 setCompanyData(data);
             } catch (error) {
@@ -77,6 +78,6 @@ function CompanyDetails() {
             </Box>
         </div>
     );
-};
+}
 
 export default CompanyDetails;

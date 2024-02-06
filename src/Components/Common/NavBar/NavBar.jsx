@@ -12,6 +12,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux'
 import { setUserDataOnLogout } from '../../../redux/userSlice.cjs';
@@ -184,4 +185,11 @@ function NavBar({ user }) {
     </AppBar>
   );
 }
+
+NavBar.propTypes = {
+  user: PropTypes.shape({
+    firstName: PropTypes.string,
+  }).isRequired,
+};
+
 export default NavBar;

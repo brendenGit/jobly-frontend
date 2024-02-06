@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import PropTypes from 'prop-types';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -9,6 +9,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import JoblyApi from '../../utils/api.cjs';
+import { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import {
   setIsFetching,
@@ -18,16 +19,16 @@ import { useDispatch } from 'react-redux';
 
 
 export default function SignUpForm({ user }) {
-  // if logged in redirect to home page - do not allow SignUpForm to be viewed 
-  if (user.firstName) {
-    return <Navigate to="/" />;
-  }
-
   // component prep
   const [errorMessage, setErrorMessage] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const joblyApi = new JoblyApi();
+
+  // if logged in redirect to home page - do not allow SignUpForm to be viewed 
+  if (user.firstName) {
+    return <Navigate to="/" />;
+  }
 
   // handle submit - registration attempt - redirect and sign in if successful
   async function handleSubmit(event) {
@@ -54,7 +55,7 @@ export default function SignUpForm({ user }) {
     } catch (error) {
       setErrorMessage(error.message);
     }
-  };
+  }
 
   return (
     <Container component="main" maxWidth="xs" sx={{
@@ -145,3 +146,9 @@ export default function SignUpForm({ user }) {
     </Container>
   );
 }
+
+SignUpForm.propTypes = {
+  user: PropTypes.shape({
+    firstName: PropTypes.string,
+  }).isRequired,
+};

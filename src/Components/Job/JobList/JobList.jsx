@@ -1,32 +1,36 @@
-import React, { useState, useEffect } from "react";
+import PropTypes from 'prop-types';
+import LinearProgress from '@mui/material/LinearProgress';
 import Box from '@mui/material/Box';
-import { TextField } from "@mui/material";
 import JobCard from "../JobCard/JobCard";
 import JoblyApi from "../../../utils/api.cjs";
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
+import { TextField } from "@mui/material";
+import { useState, useEffect } from "react";
 
 
 function JobList({ user }) {
     const [jobs, setJobs] = useState([]);
     const [buttonText, setButtonText] = useState("Search");
-
-    const joblyApi = new JoblyApi(user.token);
-
-    async function fetchJobs(search) {
-        try {
-            const data = await joblyApi.getAllJobs(search);
-            setJobs(data);
-        } catch (error) {
-            console.error("Error fetching jobs:", error);
-        }
-    };
+    const [searchQuery, setSearchQuery] = useState("");
+    const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
-        fetchJobs();
-    }, []);
+        async function fetchJobs(searchQuery) {
+            try {
+                const joblyApi = new JoblyApi(user.token);
+                setIsLoading(true)
+                const data = await joblyApi.getAllJobs(searchQuery);
+                setIsLoading(false)
+                setJobs(data)
+            } catch (error) {
+                console.error("Error fetching jobs:", error);
+            }
+        }
+        fetchJobs(searchQuery);
+    }, [searchQuery, user.token]);
 
 
     async function handleSubmit(event) {
@@ -36,12 +40,12 @@ function JobList({ user }) {
         const data = new FormData(event.currentTarget);
 
         try {
-            await fetchJobs(data.get('search'));
+            setSearchQuery(data.get('search'));
             setButtonText("Search");
         } catch (error) {
-            setErrorMessage(error.message);
+            console.log(error.message);
         }
-    };
+    }
 
     return (
         <Box
@@ -74,25 +78,37 @@ function JobList({ user }) {
                     {buttonText}
                 </Button>
             </Box>
-            {jobs.length === 0 ?
-                <Card variant="outlined" sx={{
-                    width: "65%",
-                    mb: 2,
-                }}
-                >
-                    <CardContent>
-                        <Typography variant="h6" component="div">
-                            Sorry, no jobs found!
-                        </Typography>
-                    </CardContent>
-                </Card>
+            {isLoading ?
+                <Box sx={{ width: '100%' }}>
+                    <LinearProgress />
+                </Box>
                 :
-                jobs.map(job => (
-                    <JobCard job={job} key={job.id} id={job.id} user={user} />
-                ))
-            };
+                (jobs.length === 0 ?
+                    <Card variant="outlined" sx={{
+                        width: "65%",
+                        mb: 2,
+                    }}
+                    >
+                        <CardContent>
+                            <Typography variant="h6" component="div">
+                                Sorry, no jobs found!
+                            </Typography>
+                        </CardContent>
+                    </Card>
+                    :
+                    jobs.map(job => (
+                        <JobCard job={job} key={job.id} id={job.id} user={user} />
+                    ))
+                )
+            }
         </Box>
     );
 }
+
+JobList.propTypes = {
+    user: PropTypes.shape({
+        token: PropTypes.string,
+    }).isRequired,
+};
 
 export default JobList;

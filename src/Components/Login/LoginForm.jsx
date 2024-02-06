@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import PropTypes from 'prop-types';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -8,8 +8,9 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { Navigate, useNavigate } from 'react-router-dom';
 import JoblyApi from "../../utils/api.cjs";
+import { Navigate, useNavigate } from 'react-router-dom';
+import { useState } from "react";
 import {
   setIsFetching,
   setUserDataOnLogin,
@@ -18,16 +19,16 @@ import { useDispatch } from 'react-redux';
 
 
 export default function LoginForm({ user }) {
-  // if logged in redirect to home page - do not allow LoginForm to be viewed 
-  if (user.firstName) {
-    return <Navigate to="/" />;
-  }
-
   // component prep
   const [errorMessage, setErrorMessage] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const joblyApi = new JoblyApi();
+
+  // if logged in redirect to home page - do not allow LoginForm to be viewed 
+  if (user.firstName) {
+    return <Navigate to="/" />;
+  }
 
   // handle submit - login request
   async function handleSubmit(event) {
@@ -40,7 +41,7 @@ export default function LoginForm({ user }) {
         username: data.get('username'),
         password: data.get('password'),
       });
-      
+
       dispatch(setUserDataOnLogin({
         token,
         user,
@@ -51,7 +52,7 @@ export default function LoginForm({ user }) {
     } catch (error) {
       setErrorMessage(error.message);
     }
-  };
+  }
 
   return (
     <Container component="main" maxWidth="xs" sx={{
@@ -114,3 +115,9 @@ export default function LoginForm({ user }) {
     </Container>
   );
 }
+
+LoginForm.propTypes = {
+  user: PropTypes.shape({
+    firstName: PropTypes.string,
+  }).isRequired,
+};

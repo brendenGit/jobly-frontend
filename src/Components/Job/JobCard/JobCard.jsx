@@ -1,11 +1,12 @@
-import React, { useState } from "react";
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import ApplyButton from '../ApplyButton/ApplyButton';
-import { CardActions } from '@mui/material';
 import addCommas from '../../../utils/addCommas.cjs';
 import JoblyApi from '../../../utils/api.cjs';
+import PropTypes from 'prop-types';
+import { useState } from "react";
+import { CardActions } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     setIsFetching,
@@ -70,6 +71,23 @@ function JobCard({ job, id, user }) {
             </CardActions>
         </Card >
     );
+}
+
+
+JobCard.propTypes = {
+    id: PropTypes.number.isRequired,
+
+    user: PropTypes.shape({
+        token: PropTypes.string,
+        username: PropTypes.string,
+    }).isRequired,
+
+    job: PropTypes.shape({
+        title: PropTypes.string.isRequired,
+        companyName: PropTypes.string.isRequired,
+        salary: PropTypes.number,
+        equity: PropTypes.string,
+    }).isRequired,
 };
 
 export default JobCard;

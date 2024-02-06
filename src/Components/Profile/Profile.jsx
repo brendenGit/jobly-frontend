@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import PropTypes from 'prop-types';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -8,6 +8,7 @@ import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import JoblyApi from "../../utils/api.cjs";
+import { useState } from "react";
 import {
     setIsFetching,
     setUserDataOnUpdate,
@@ -47,7 +48,7 @@ export default function Profile({ user }) {
         } catch (error) {
             setErrorMessage(error.message);
         }
-    };
+    }
 
     return (
         <Container component="main" maxWidth="xs" sx={{
@@ -132,3 +133,13 @@ export default function Profile({ user }) {
         </Container>
     );
 }
+
+Profile.propTypes = {
+    user: PropTypes.shape({
+        token: PropTypes.string.isRequired,
+        username: PropTypes.string.isRequired,
+        firstName: PropTypes.string.isRequired,
+        lastName: PropTypes.string.isRequired,
+        email: PropTypes.string.isRequired,
+    }).isRequired,
+};
