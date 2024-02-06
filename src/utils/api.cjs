@@ -1,5 +1,6 @@
 import axios from "axios";
-require("dotenv").config();
+import dotenv from "dotenv";
+dotenv.config();
 
 const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:3001";
 
