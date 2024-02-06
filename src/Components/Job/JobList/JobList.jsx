@@ -51,12 +51,14 @@ function JobList({ user }) {
         <Box
             display="flex"
             flexDirection="column"
-            justifyContent="center"
             alignItems="center"
+            margin="auto"
+            marginTop="25px"
+            minWidth="60%"
         >
             <Box component="form" onSubmit={handleSubmit}
                 sx={{
-                    width: '100%',
+                    minWidth: '80%',
                     m: 4
                 }}
             >
@@ -79,13 +81,13 @@ function JobList({ user }) {
                 </Button>
             </Box>
             {isLoading ?
-                <Box sx={{ width: '100%' }}>
+                <Box sx={{ minWidth: '80%' }}>
                     <LinearProgress />
                 </Box>
                 :
                 (jobs.length === 0 ?
                     <Card variant="outlined" sx={{
-                        width: "65%",
+                        minWidth: "80%",
                         mb: 2,
                     }}
                     >

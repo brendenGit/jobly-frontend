@@ -47,7 +47,7 @@ function JobCard({ job, id, user }) {
 
     return (
         <Card variant="outlined" sx={{
-            width: "100%",
+            minWidth: "80%",
             mb: 2,
         }}
         >

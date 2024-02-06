@@ -8,7 +8,7 @@ import { Link as RouterLink } from 'react-router-dom';
 function CompanyCard({ company }) {
     return (
         <Card variant="outlined" sx={{
-            width: "65%",
+            width: "80%",
             mb: 2,
             '&:hover': {
                 color: 'blue'
@@ -23,7 +23,10 @@ function CompanyCard({ company }) {
                     <Typography sx={{ fontSize: 14, mt: 0 }} color="text.secondary" gutterBottom>
                         Employees: {company.numEmployees}
                     </Typography>
-                    <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
+                    <Typography variant="body2" color="text.secondary" sx={{
+                        mt: 2,
+                        overflow: 'wrap',
+                    }}>
                         {company.description}
                     </Typography>
                 </CardContent>
