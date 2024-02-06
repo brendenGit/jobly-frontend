@@ -136,10 +136,10 @@ export default function Profile({ user }) {
 
 Profile.propTypes = {
     user: PropTypes.shape({
-        token: PropTypes.string.isRequired,
-        username: PropTypes.string.isRequired,
-        firstName: PropTypes.string.isRequired,
-        lastName: PropTypes.string.isRequired,
-        email: PropTypes.string.isRequired,
+        token: PropTypes.string,
+        username: PropTypes.string,
+        firstName: PropTypes.string,
+        lastName: PropTypes.string,
+        email: PropTypes.string,
     }).isRequired,
 };
