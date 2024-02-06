@@ -1,6 +1,4 @@
 import axios from "axios";
-import dotenv from "dotenv";
-dotenv.config();
 
 const BASE_URL = "https://jobly-backend-t1yn.onrender.com";
 
