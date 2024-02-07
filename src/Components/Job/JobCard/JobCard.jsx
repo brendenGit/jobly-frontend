@@ -18,7 +18,7 @@ function JobCard({ job, id, user }) {
     const [errorMessage, setErrorMessage] = useState(null);
     const [hasApplied, setHasApplied] = useState(false);
     const dispatch = useDispatch();
-    const userApplications = useSelector((state) => state.user.user.applications);
+    const userApplications = user.applications;
 
     const applied = userApplications.some(application => application === id)
 

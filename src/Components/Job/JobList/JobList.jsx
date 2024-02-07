@@ -18,7 +18,6 @@ function JobList({ user }) {
     const [searchQuery, setSearchQuery] = useState("");
     const [isLoading, setIsLoading] = useState(true)
 
-
     useEffect(() => {
         if (user.firstName) {
             const fetchJobs = async (searchQuery) => {

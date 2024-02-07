@@ -26,6 +26,7 @@ const userSlice = createSlice({
                 user: {
                     isAuthenticated: true,
                     token: token,
+                    applications: [],
                     ...user,
                 }
             };
