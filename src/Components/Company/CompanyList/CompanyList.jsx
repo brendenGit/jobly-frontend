@@ -22,7 +22,7 @@ function CompanyList({ user }) {
         if (user.firstName) {
             const fetchCompanies = async (searchQuery) => {
                 try {
-                    const joblyApi = new JoblyApi();
+                    const joblyApi = new JoblyApi(user.token);
                     setIsLoading(true)
                     const data = await joblyApi.getAllCompanies(searchQuery);
                     setIsLoading(false)
@@ -34,7 +34,7 @@ function CompanyList({ user }) {
             };
             fetchCompanies(searchQuery);
         }
-    }, [searchQuery, user.firstName]);
+    }, [searchQuery, user.firstName, user.token]);
 
     if (!user.firstName) {
         return <Navigate to="/login" replace={true} />;

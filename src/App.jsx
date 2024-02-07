@@ -1,4 +1,3 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
 import NavBar from "./Components/Common/NavBar/NavBar.jsx";
 import Home from "./Components/Home/Home.jsx";
 import LoginForm from "./Components/Login/LoginForm.jsx";
@@ -9,6 +8,8 @@ import './App.css';
 import CompanyDetails from "./Components/Company/CompanyDetails/CompanyDetails.jsx";
 import JobList from "./Components/Job/JobList/JobList.jsx";
 import { useSelector } from "react-redux";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+
 
 function App() {
   const user = useSelector((state) => state.user.user);
@@ -29,6 +30,8 @@ function App() {
           <Route path="/jobs" element={<JobList user={user} exact />} />
           {/**ProtectedRoute */}
           <Route path="/profile" element={<Profile user={user} exact />} />
+          {/* Catch all route */}
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </BrowserRouter>
     </div>
