@@ -3,14 +3,13 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import JoblyApi from '../../utils/api.cjs';
 import { useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate, Link } from "react-router-dom";
 import {
   setIsFetching,
   setUserDataOnLogin,
@@ -138,7 +137,7 @@ export default function SignUpForm({ user }) {
           >
             Create your account
           </Button>
-          <Link href="/login" variant="body2">
+          <Link to="/login" variant="body2">
             {"Already have an account? Login"}
           </Link>
         </Box>

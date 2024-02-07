@@ -3,13 +3,12 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import JoblyApi from "../../utils/api.cjs";
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate, Link } from 'react-router-dom';
 import { useState } from "react";
 import {
   setIsFetching,
@@ -107,7 +106,7 @@ export default function LoginForm({ user }) {
           >
             Login
           </Button>
-          <Link href="/signup" variant="body2">
+          <Link to="/signup" variant="body2">
             {"Don't have an account? Sign Up"}
           </Link>
         </Box>
