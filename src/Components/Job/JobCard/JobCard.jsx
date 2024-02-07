@@ -7,7 +7,7 @@ import JoblyApi from '../../../utils/api.cjs';
 import PropTypes from 'prop-types';
 import { useState } from "react";
 import { CardActions } from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import {
     setIsFetching,
     setUserApplications,
@@ -80,6 +80,7 @@ JobCard.propTypes = {
     user: PropTypes.shape({
         token: PropTypes.string,
         username: PropTypes.string,
+        applications: PropTypes.array,
     }).isRequired,
 
     job: PropTypes.shape({

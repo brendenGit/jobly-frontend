@@ -117,6 +117,7 @@ function CompanyList({ user }) {
 CompanyList.propTypes = {
     user: PropTypes.shape({
         firstName: PropTypes.string,
+        token: PropTypes.string,
     }).isRequired,
 };
 
