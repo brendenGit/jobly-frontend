@@ -1,4 +1,5 @@
 import Box from '@mui/material/Box';
+import PropTypes from 'prop-types';
 import LinearProgress from '@mui/material/LinearProgress';
 import CompanyCard from "../CompanyCard/CompanyCard";
 import JoblyApi from "../../../utils/api.cjs";
@@ -8,30 +9,36 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { useState, useEffect } from "react";
 import { TextField } from "@mui/material";
+import { Navigate } from "react-router-dom";
 
 
-function CompanyList() {
+function CompanyList({ user }) {
     const [companies, setCompanies] = useState([]);
     const [buttonText, setButtonText] = useState("Search");
     const [searchQuery, setSearchQuery] = useState("");
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
-        async function fetchCompanies(searchQuery) {
-            try {
-                const joblyApi = new JoblyApi();
-                setIsLoading(true)
-                const data = await joblyApi.getAllCompanies(searchQuery);
-                setIsLoading(false)
-                setCompanies(data)
-            } catch (error) {
-                setIsLoading(false)
-                console.error("Error fetching companies:", error);
-            }
+        if (user.firstName) {
+            const fetchCompanies = async (searchQuery) => {
+                try {
+                    const joblyApi = new JoblyApi();
+                    setIsLoading(true)
+                    const data = await joblyApi.getAllCompanies(searchQuery);
+                    setIsLoading(false)
+                    setCompanies(data)
+                } catch (error) {
+                    setIsLoading(false)
+                    console.error("Error fetching companies:", error);
+                }
+            };
+            fetchCompanies(searchQuery);
         }
-        fetchCompanies(searchQuery);
-    }, [searchQuery]);
+    }, [searchQuery, user.firstName]);
 
+    if (!user.firstName) {
+        return <Navigate to="/login" replace={true} />;
+    }
 
     async function handleSubmit(event) {
         event.preventDefault();
@@ -106,5 +113,11 @@ function CompanyList() {
         </Box>
     );
 }
+
+CompanyList.propTypes = {
+    user: PropTypes.shape({
+        firstName: PropTypes.string,
+    }).isRequired,
+};
 
 export default CompanyList;

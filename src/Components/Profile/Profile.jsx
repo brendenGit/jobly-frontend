@@ -14,15 +14,19 @@ import {
     setUserDataOnUpdate,
 } from '../../redux/userSlice.cjs';
 import { useDispatch } from 'react-redux';
+import { Navigate } from "react-router-dom";
 
 
 export default function Profile({ user }) {
-
     // component prep
     const [errorMessage, setErrorMessage] = useState(null);
     const [successMessage, setSuccessMessage] = useState(null);
     const dispatch = useDispatch();
     const joblyApi = new JoblyApi(user.token);
+
+    if (!user.firstName) {
+        return <Navigate to="/login" replace={true} />
+    }
 
     // handle submit - update profile request
     async function handleSubmit(event) {

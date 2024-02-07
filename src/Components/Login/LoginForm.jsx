@@ -26,7 +26,7 @@ export default function LoginForm({ user }) {
 
   // if logged in redirect to home page - do not allow LoginForm to be viewed 
   if (user.firstName) {
-    return <Navigate to="/" />;
+    return <Navigate to="/" replace={true} />;
   }
 
   // handle submit - login request

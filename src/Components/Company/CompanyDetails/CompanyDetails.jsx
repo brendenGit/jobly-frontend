@@ -1,30 +1,35 @@
 import Box from '@mui/material/Box';
+import PropTypes from 'prop-types';
 import Typography from '@mui/material/Typography';
 import JobCard from '../../Job/JobCard/JobCard';
 import JoblyApi from '../../../utils/api.cjs';
-import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { Navigate } from "react-router-dom";
 
 
-function CompanyDetails() {
+function CompanyDetails({ user }) {
     const { handle } = useParams();
     const [companyData, setCompanyData] = useState(null);
-    const user = useSelector((state) => state.user.user);
-
 
     useEffect(() => {
-        const fetchCompanyData = async () => {
-            try {
-                const joblyApi = new JoblyApi();
-                const data = await joblyApi.getCompany(handle);
-                setCompanyData(data);
-            } catch (error) {
-                console.error('Error fetching company data:', error);
-            }
-        };
-        fetchCompanyData();
-    }, [handle]);
+        if (user.firstName) {
+            const fetchCompanyData = async () => {
+                try {
+                    const joblyApi = new JoblyApi();
+                    const data = await joblyApi.getCompany(handle);
+                    setCompanyData(data);
+                } catch (error) {
+                    console.error('Error fetching company data:', error);
+                }
+            };
+            fetchCompanyData();
+        }
+    }, [handle, user.firstName]);
+
+    if (!user.firstName) {
+        return <Navigate to="/login" replace={true} />;
+    }
 
     if (!companyData) {
         return <h1>Loading...</h1>;
@@ -79,5 +84,11 @@ function CompanyDetails() {
         </div>
     );
 }
+
+CompanyDetails.propTypes = {
+    user: PropTypes.shape({
+        firstName: PropTypes.string,
+    }).isRequired,
+};
 
 export default CompanyDetails;

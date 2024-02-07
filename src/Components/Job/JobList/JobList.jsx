@@ -9,6 +9,7 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { TextField } from "@mui/material";
 import { useState, useEffect } from "react";
+import { Navigate } from "react-router-dom";
 
 
 function JobList({ user }) {
@@ -17,21 +18,27 @@ function JobList({ user }) {
     const [searchQuery, setSearchQuery] = useState("");
     const [isLoading, setIsLoading] = useState(true)
 
-    useEffect(() => {
-        async function fetchJobs(searchQuery) {
-            try {
-                const joblyApi = new JoblyApi(user.token);
-                setIsLoading(true)
-                const data = await joblyApi.getAllJobs(searchQuery);
-                setIsLoading(false)
-                setJobs(data)
-            } catch (error) {
-                console.error("Error fetching jobs:", error);
-            }
-        }
-        fetchJobs(searchQuery);
-    }, [searchQuery, user.token]);
 
+    useEffect(() => {
+        if (user.firstName) {
+            const fetchJobs = async (searchQuery) => {
+                try {
+                    const joblyApi = new JoblyApi(user.token);
+                    setIsLoading(true)
+                    const data = await joblyApi.getAllJobs(searchQuery);
+                    setIsLoading(false)
+                    setJobs(data)
+                } catch (error) {
+                    console.error("Error fetching jobs:", error);
+                }
+            };
+            fetchJobs(searchQuery);
+        }
+    }, [searchQuery, user.firstName, user.token]);
+
+    if (!user.firstName) {
+        return <Navigate to="/login" replace={true} />
+    }
 
     async function handleSubmit(event) {
         event.preventDefault();
@@ -110,6 +117,7 @@ function JobList({ user }) {
 JobList.propTypes = {
     user: PropTypes.shape({
         token: PropTypes.string,
+        firstName: PropTypes.string,
     }).isRequired,
 };
 

@@ -26,7 +26,7 @@ export default function SignUpForm({ user }) {
 
   // if logged in redirect to home page - do not allow SignUpForm to be viewed 
   if (user.firstName) {
-    return <Navigate to="/" />;
+    return <Navigate to="/" replace={true} />;
   }
 
   // handle submit - registration attempt - redirect and sign in if successful
