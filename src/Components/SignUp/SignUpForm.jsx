@@ -60,8 +60,6 @@ export default function SignUpForm({ user }) {
     <Container component="main" maxWidth="xs" sx={{
       borderRadius: 1,
       padding: 2,
-      paddingTop: 0,
-      marginTop: 4,
       backgroundColor: "rgba(255, 255, 255, 0.7)"
     }}>
       < CssBaseline />

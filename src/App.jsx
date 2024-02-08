@@ -7,6 +7,7 @@ import CompanyList from "./Components/Company/CompanyList/CompanyList.jsx";
 import './App.css';
 import CompanyDetails from "./Components/Company/CompanyDetails/CompanyDetails.jsx";
 import JobList from "./Components/Job/JobList/JobList.jsx";
+import Footer from "./Components/Common/Footer/Footer.jsx";
 import { useSelector } from "react-redux";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 
@@ -33,6 +34,7 @@ function App() {
           {/* Catch all route */}
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
+        <Footer></Footer>
       </BrowserRouter>
     </div>
   );
