@@ -85,7 +85,7 @@ function Home() {
                                 >
                                     Your one-stop destination for job seekers.
                                 </Typography>
-                                <Typography variant="body2" color="text.primary" marginBottom={2}>
+                                <Typography variant="body1" color="text.primary" marginBottom={2}>
                                     Create an account, explore companies, and browse job listings tailored to your preferences.
                                     Apply with ease to your dream jobs, all in one place.
                                 </Typography>
@@ -93,19 +93,11 @@ function Home() {
                                     Find your perfect career match effortlessly with Jobly. Join today and start your journey towards success.
                                 </Typography>
                             </CardContent>
-                            <Box
-                                sx={{
-                                    borderRadius: '10px',
-                                    overflow: 'hidden',
-                                    boxShadow: 10, // Adjust shadow values as needed
-                                }}
-                            >
-                                <CardMedia
-                                    style={{ height: 400 }}
-                                    image="/src/assets/landing.jpg"
-                                    title="person job searching"
-                                />
-                            </Box>
+                            <CardMedia
+                                sx={{ height: 420, borderRadius: '20px' }}
+                                image="https://images.pexels.com/photos/4049786/pexels-photo-4049786.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                                title="person job searching"
+                            />
                         </Card>
                     </Item>
                 </Grid>

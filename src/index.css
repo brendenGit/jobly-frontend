@@ -1,7 +1,8 @@
-html, body {
+html,
+body {
   margin: 0;
   font-family: 'Roboto', sans-serif;
-  background-image: url('./assets/background.jpg');
+  background-image: url('/static/images/background.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
